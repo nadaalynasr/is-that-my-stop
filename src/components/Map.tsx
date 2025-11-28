@@ -34,10 +34,24 @@ export const Map: React.FC<MapProps> = ({
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11', 
+      style: 'mapbox://styles/mapbox/standard',
+      config: {
+        basemap: {
+          showPedestrianRoads: false,
+          showPointOfInterestLabels: false,
+          showRoadLabels: false,
+          showTransitLabels: false,
+          font: "Barlow",
+          show3dObjects: false,
+          showLandmarkIconLabels: false,
+          theme: "faded"
+        }
+      },
       center: [center[0], center[1]],
       zoom: zoom,
-      projection: 'mercator' as any 
+      bearing: 0.00,
+      pitch: 0.00,
+      projection: 'mercator' as any
     });
 
     // Load mapbox style 

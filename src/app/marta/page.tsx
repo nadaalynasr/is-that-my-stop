@@ -10,7 +10,7 @@ export default function AtlantaGamePage() {
   const railRoutes = routes as RouteFeature[];
 
   return (
-    <div className="flex h-screen w-full bg-black">
+    <div className="flex h-screen w-8/12 bg-black">
       {/* The Map Container 
         - flex-1: Takes up all available space
         - relative: Needed for positioning
