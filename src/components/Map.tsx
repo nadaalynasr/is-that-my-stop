@@ -15,6 +15,7 @@ interface MapProps {
   zoom: number;
   onStationClick: (station: StationFeature) => void;
   getStationColor: (station: StationFeature) => string;
+  setMapRef?: (map: mapboxgl.Map) => void;
 }
 
 export const Map: React.FC<MapProps> = ({
@@ -23,7 +24,8 @@ export const Map: React.FC<MapProps> = ({
   center,
   zoom,
   onStationClick,
-  getStationColor
+  getStationColor,
+  setMapRef
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -54,9 +56,14 @@ export const Map: React.FC<MapProps> = ({
       projection: 'mercator' as any
     });
 
-    // Load mapbox style 
+    // Load mapbox style
     map.current.on('load', () => {
       if (!map.current) return;
+
+      // Set map ref if callback provided
+      if (setMapRef) {
+        setMapRef(map.current);
+      }
 
       // Adding the route lines
       
@@ -124,6 +131,14 @@ export const Map: React.FC<MapProps> = ({
       });
       map.current.on('mouseleave', 'station-points', () => {
         map.current!.getCanvas().style.cursor = '';
+      });
+
+      // Add click handler for stations
+      map.current.on('click', 'station-points', (e) => {
+        if (e.features && e.features.length > 0) {
+          const clickedStation = e.features[0] as unknown as StationFeature;
+          onStationClick(clickedStation);
+        }
       });
     });
   }, [center, zoom]); // Run once on mount
