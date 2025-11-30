@@ -1,11 +1,22 @@
 import { Feature, Point, LineString, FeatureCollection } from 'geojson';
 
 export interface StationProperties {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   alternate_names?: string[];
-  line: string;
-  order: number;
+  line?: string;
+  order?: number;
+  OBJECTID?: number;
+  STATION?: string;
+  Station_Code?: string;
+  Web_address?: string;
+  Parking_Spaces?: number;
+  Parking?: string;
+  Street?: string;
+  City?: string;
+  Zip?: number;
+  GlobalID?: string;
+  LABEL?: string;
 }
 
 export interface StationFeature extends Feature<Point, StationProperties> {
