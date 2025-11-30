@@ -8,7 +8,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ guesses }) => {
   return (
-    <div className="w-96 h-screen bg-black overflow-y-auto">
+    <div className="h-screen bg-black overflow-y-auto">
         An ode to everytime you've asked "Is this our stop? Are we there yet?"
       <GuessList guesses={guesses} />
     </div>
