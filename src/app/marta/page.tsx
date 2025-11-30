@@ -50,20 +50,23 @@ export default function AtlantaGamePage() {
   };
 
   return (
-    <div className="flex h-screen w-8/12">
-      {/* The Map Container
-        - flex-1: Takes up all available space
-        - relative: Needed for positioning
-      */}
-      <div className="flex-1 relative">
-        <div className="absolute top-1/8 left-1/2 transform -translate-x-1/2 z-10 w-full">
-          <SearchBar stations={stations} onStationSelect={handleSearchSelect} />
+    <div>
+      <div className="flex h-screen">
+
+        {/* MAP CONTAINER */}
+        <div className ="w-8/12 relative">
+          <MapContainer stations={stations} routes={railRoutes} setMapRef={setMapRef} onStationClick={handleStationClick} />
+            <div className="absolute top-1/12 left-1/2 transform -translate-x-1/2 z-10 w-full">
+              <SearchBar stations={stations} onStationSelect={handleSearchSelect} />
+          </div>
         </div>
-        <MapContainer stations={stations} routes={railRoutes} setMapRef={setMapRef} onStationClick={handleStationClick} />
-      </div>
-      {/* TODO add sidebar to right side flush */}
-      <div>
-        <Sidebar guesses={gameState.guesses}/>
+
+        {/* SIDEBAR */}
+        <div className="w-4/12">
+          <Sidebar guesses={gameState.guesses}/>
+        </div>
+
+
       </div>
     </div>
   );
