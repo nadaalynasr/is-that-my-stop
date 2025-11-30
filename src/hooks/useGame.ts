@@ -1,5 +1,5 @@
 // src/hooks/useGame.ts
-import { useState, useCallback } from 'react'; 
+import { useState, useCallback } from 'react';
 import { getStopsDistance } from '@/lib/martaLogic';
 import { StationFeature, ProximityLevel, Guess, GameState } from '@/types';
 
@@ -11,11 +11,15 @@ export function useGame() {
     guessedStationIds: new Set<number>()
   });
 
+  const setTargetStation = useCallback((station: StationFeature) => {
+    setGameState(prev => ({ ...prev, targetStation: station }));
+  }, []);
+
   const makeGuess = useCallback((station: StationFeature) => {
     if (gameState.targetStation === null) return; // Early return if no target set
     // get station names
-    const guessName = station.properties.name!;
-    const targetName = gameState.targetStation.properties.name!;
+    const guessName = station.properties.STATION!;
+    const targetName = gameState.targetStation.properties.STATION!;
 
     // calculate stops using the graph
     const stops = getStopsDistance(guessName, targetName);
@@ -49,5 +53,5 @@ export function useGame() {
     }));
   }, [gameState]);
 
-  return { gameState, makeGuess };
+  return { gameState, makeGuess, setTargetStation };
 }

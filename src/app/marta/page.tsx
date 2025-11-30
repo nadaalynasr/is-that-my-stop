@@ -1,7 +1,9 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Map } from '@/components/Map';
 import { SearchBar } from '@/components/Searchbar';
+import { Sidebar } from '@/components/Sidebar';
+import { useGame } from '@/hooks/useGame';
 import features from './data/features.json';
 import routes from './data/routes.json';
 import { StationFeature, RouteFeature } from '@/types';
@@ -9,16 +11,21 @@ import mapboxgl from 'mapbox-gl';
 
 export default function AtlantaGamePage() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  const { gameState, makeGuess, setTargetStation } = useGame();
 
   // force TypeScript to recognize the data types
   const stations = (features as any).features as StationFeature[];
   const railRoutes = routes as RouteFeature[];
 
+  useEffect(() => {
+    const target = stations[Math.floor(Math.random() * stations.length)];
+    setTargetStation(target);
+    console.log('Target station set to:', target.properties?.STATION);
+  }, [stations, setTargetStation]);
 
-  //TODO: Doesn't work yet.
   const handleStationClick = (station: StationFeature) => {
-    console.log('Clicked:', station.properties.STATION || station.properties.name);
-    // Fly to the clicked station
+    makeGuess(station);
+    // Fly to the station
     if (station.geometry.type === 'Point') {
       mapRef.current?.flyTo({
         center: station.geometry.coordinates as [number, number],
@@ -28,8 +35,8 @@ export default function AtlantaGamePage() {
   };
 
   const handleSearchSelect = (station: StationFeature) => {
-    console.log('Selected from search:', station.properties.STATION || station.properties.name);
-    // Fly to the station 
+    makeGuess(station);
+    // Fly to the station
     if (station.geometry.type === 'Point') {
       mapRef.current?.flyTo({
         center: station.geometry.coordinates as [number, number],
@@ -43,7 +50,7 @@ export default function AtlantaGamePage() {
   };
 
   return (
-    <div className="flex h-screen w-8/12 bg-black">
+    <div className="flex h-screen w-8/12">
       {/* The Map Container
         - flex-1: Takes up all available space
         - relative: Needed for positioning
@@ -53,6 +60,10 @@ export default function AtlantaGamePage() {
           <SearchBar stations={stations} onStationSelect={handleSearchSelect} />
         </div>
         <MapContainer stations={stations} routes={railRoutes} setMapRef={setMapRef} onStationClick={handleStationClick} />
+      </div>
+      {/* TODO add sidebar to right side flush */}
+      <div>
+        <Sidebar guesses={gameState.guesses}/>
       </div>
     </div>
   );
