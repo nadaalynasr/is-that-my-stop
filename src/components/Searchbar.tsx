@@ -58,7 +58,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ stations, onStationSelect,
       onChange={handleInputChange}
       onKeyDown={handleKeyDown}
       placeholder="Search for a MARTA station..."
-      className="flex rounded-full border-2 border-blue-500/50 overflow-hidden max-w-2xl mx-auto px-12 py-8 text-2xl h-24 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      className="flex p-100 rounded-full border-2 border-blue-500/50 overflow-hidden mx-auto text-2xl h-24 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     />
   );
 };
