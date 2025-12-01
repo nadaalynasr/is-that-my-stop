@@ -6,11 +6,11 @@ interface GuessListItemProps {
   guess: Guess;
 }
 
-const BADGE_STYLES: Record<string, { backgroundColor: string; color: string }> = {
-  gold: { backgroundColor: '#facc15', color: '#ffffffff' },
-  red: { backgroundColor: '#ef4444', color: '#ffffff' },
-  blue: { backgroundColor: '#3b82f6', color: '#ffffff' },
-  green: { backgroundColor: '#22c55e', color: '#ffffff' }
+const BADGE_STYLES: Record<string, { backgroundColor: string; color: string, borderRadius?: string, padding?: string, margin?: string }> = {
+  gold: { backgroundColor: '#facc15', color: '#ffffffff', borderRadius:'7px', padding:'5px', margin:'2px' },
+  red: { backgroundColor: '#ef4444', color: '#ffffff', borderRadius:'7px', padding:'5px', margin: '2px' },
+  blue: { backgroundColor: '#3b82f6', color: '#ffffff', borderRadius:'7px', padding:'5px', margin:'2px'   },
+  green: { backgroundColor: '#22c55e', color: '#ffffff', borderRadius:'7px', padding:'5px', margin:'2px'  }
 };
 
 export const GuessListItem: React.FC<GuessListItemProps> = ({ guess }) => {
@@ -20,7 +20,8 @@ export const GuessListItem: React.FC<GuessListItemProps> = ({ guess }) => {
   return (
     <div className="flex items-center gap-3 py-2">
       {/* line badges */}
-      <div className="flex flex-row gap-3 min-w-[200px]">
+      <div 
+      className="flex flex-row gap-3 min-w-[250px]">
         {lines.map((line) => (
           <div
             key={line}
