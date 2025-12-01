@@ -122,6 +122,23 @@ export const Map: React.FC<MapProps> = ({
         }
       });
 
+      // Add labels for guessed stations
+      map.current.addLayer({
+        id: 'station-labels',
+        type: 'symbol',
+        source: 'stations',
+        layout: {
+          'text-field': ['get', 'STATION'],
+          'text-justify': 'center',
+          'text-size': 12,
+          'text-offset': [0, -1.2], // Position above the circle
+        },
+        paint: {
+          'text-color': '#000000'
+        },
+        filter: ['!=', ['get', 'dynamicColor'], '#ffffff'] // Only show labels for guessed stations
+      });
+
       // -- ETC MISC -- 
       
 

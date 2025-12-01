@@ -92,6 +92,22 @@ export const NETWORK_GRAPH: Record<string, string[]> = {
   'Indian Creek': ['Kensington']
 };
 
+// Line color mapping for MARTA
+export const LINE_COLORS: Record<string, string> = {
+  'blue': '#0075B2',
+  'gold': '#D4A723',
+  'red': '#CE242B',
+  'green': '#009D4B'
+};
+
+// Get the first line color for a station (used for filling guessed stations)
+export const getStationFillColor = (stationName: string): string => {
+  const lines = STATION_LINES[stationName];
+  if (!lines || lines.length === 0) return '#FFFFFF'; // Default white
+  const firstLine = lines[0];
+  return LINE_COLORS[firstLine] || '#FFFFFF';
+};
+
 // ALGORITHM: BFS for Shortest Path
 
 export const getStopsDistance = (startName: string, endName: string): number => {

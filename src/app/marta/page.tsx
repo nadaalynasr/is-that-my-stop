@@ -6,7 +6,8 @@ import { Sidebar } from '@/components/Sidebar';
 import { useGame } from '@/hooks/useGame';
 import features from './data/features.json';
 import routes from './data/routes.json';
-import { StationFeature, RouteFeature } from '@/types';
+import { StationFeature, RouteFeature, GameState } from '@/types';
+import { getStationFillColor } from '@/lib/martaLogic';
 import mapboxgl from 'mapbox-gl';
 
 export default function AtlantaGamePage() {
@@ -55,7 +56,7 @@ export default function AtlantaGamePage() {
 
         {/* MAP CONTAINER */}
         <div className ="w-8/12 relative">
-          <MapContainer stations={stations} routes={railRoutes} setMapRef={setMapRef} onStationClick={handleStationClick} />
+          <MapContainer stations={stations} routes={railRoutes} setMapRef={setMapRef} onStationClick={handleStationClick} gameState={gameState} />
             <div className="absolute top-1/12 left-1/2 transform -translate-x-1/2 z-10 w-full">
               <SearchBar stations={stations} onStationSelect={handleSearchSelect} />
           </div>
@@ -73,11 +74,12 @@ export default function AtlantaGamePage() {
 }
 
 // Extract map into a component with ref management
-function MapContainer({ stations, routes, setMapRef, onStationClick }: {
+function MapContainer({ stations, routes, setMapRef, onStationClick, gameState }: {
   stations: StationFeature[];
   routes: RouteFeature[];
   setMapRef: (map: mapboxgl.Map) => void;
   onStationClick: (station: StationFeature) => void;
+  gameState: GameState;
 }) {
   return (
     <Map
@@ -86,7 +88,13 @@ function MapContainer({ stations, routes, setMapRef, onStationClick }: {
       center={[-84.3880, 33.7490]} // Atlanta Center [Lon, Lat]
       zoom={11}
       onStationClick={onStationClick}
-      getStationColor={(station) => '#ffffff'}
+      getStationColor={(station) => {
+        const stationName = station.properties?.STATION || '';
+        if (gameState.guessedStationIds.has(station.id)) {
+          return getStationFillColor(stationName);
+        }
+        return '#ffffff';
+      }}
       setMapRef={setMapRef}
     />
   );
