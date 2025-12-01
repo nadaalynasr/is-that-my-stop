@@ -32,6 +32,13 @@ export default function AtlantaGamePage() {
         center: station.geometry.coordinates as [number, number],
         zoom: 14,
       });
+      // Zoom back out after 3 seconds
+      setTimeout(() => {
+        mapRef.current?.flyTo({
+          center: station.geometry.coordinates as [number, number],
+          zoom: 11,
+        });
+      }, 3000);
     }
   };
 
@@ -43,6 +50,13 @@ export default function AtlantaGamePage() {
         center: station.geometry.coordinates as [number, number],
         zoom: 14,
       });
+      // Zoom back out after 3 seconds
+      setTimeout(() => {
+        mapRef.current?.flyTo({
+          center: station.geometry.coordinates as [number, number],
+          zoom: 12,
+        });
+      }, 2500);
     }
   };
 
