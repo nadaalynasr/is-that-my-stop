@@ -18,7 +18,7 @@ export const GuessListItem: React.FC<GuessListItemProps> = ({ guess }) => {
   const lines = STATION_LINES[name] || ['ERROR'];
 
   return (
-    <button className="flex w-full items-center rounded px-2 py-1 text-sm">
+    <button className={`flex w-full items-center rounded px-2 py-1 text-sm` }>
       {/* line badges */}
       {lines.map((line) => (
         <div

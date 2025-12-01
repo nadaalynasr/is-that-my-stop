@@ -4,7 +4,7 @@ export interface StationProperties {
   id?: number;
   name?: string;
   alternate_names?: string[];
-  line?: string;
+  lines?: string[];
   order?: number;
   OBJECTID?: number;
   STATION?: string;
